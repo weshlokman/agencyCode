@@ -41,16 +41,16 @@ def combine_files(input_folder, output_file):
         # Concatenate all dataframes into one, aligning columns
         combined_df = pd.concat(all_dataframes, ignore_index=True, sort=False)
 
-        # Ensure 'Public email' column is present and drop rows without it
-        if 'Public email' not in combined_df.columns:
-            print("Column 'Public email' not found in the files. Unable to proceed with deduplication.")
+        # Ensure 'Email' column is present and drop rows without it
+        if 'Email' not in combined_df.columns:
+            print("Column 'Email' not found in the files. Unable to proceed with deduplication.")
             return
 
-        # Filter out rows where 'Public email' is NaN or empty
-        combined_df = combined_df[combined_df['Public email'].notnull() & (combined_df['Public email'].astype(str) != '')]
+        # Filter out rows where 'Email' is NaN or empty
+        combined_df = combined_df[combined_df['Email'].notnull() & (combined_df['Email'].astype(str) != '')]
 
         # Remove rows where 'Public email' is duplicated (keeping the first occurrence)
-        combined_df.drop_duplicates(subset=['Public email'], inplace=True)
+        combined_df.drop_duplicates(subset=['Email'], inplace=True)
 
         # Write the combined dataframe to an Excel file
         combined_df.to_excel(output_file, index=False)
@@ -60,6 +60,6 @@ def combine_files(input_folder, output_file):
 
 # Example usage
 input_folder = "data"  # Replace with your folder path
-output_file = "all_leads_from_muslim_campaigns_filtered.xlsx"  # Replace with your desired output file name
+output_file = "all_leads_processed.xlsx"  # Replace with your desired output file name
 
 combine_files(input_folder, output_file)
