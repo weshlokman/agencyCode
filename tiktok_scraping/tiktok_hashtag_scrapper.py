@@ -122,8 +122,8 @@ def scrape_tiktok_selenium(hashtag, num_videos=1000, conn=None):
     driver = uc.Chrome(options=chrome_options)
 
     # Perform login
-    login_to_tiktok(driver, username, password)
-    time.sleep(5)
+    # login_to_tiktok(driver, username, password)
+    # time.sleep(5)
     print("Continuing script after login.")
 
     # Navigate to the TikTok hashtag page
@@ -200,7 +200,7 @@ def scrape_tiktok_selenium(hashtag, num_videos=1000, conn=None):
 
 def insert_to_db(conn, video_data, hashtag):
     query = """
-    INSERT OR IGNORE INTO tiktok_videos_1 (username, profile_link, video_caption, hashtag)
+    INSERT OR IGNORE INTO tiktok_videos_2 (username, profile_link, video_caption, hashtag)
     VALUES (?, ?, ?, ?)
     """
     try:
@@ -213,7 +213,7 @@ def insert_to_db(conn, video_data, hashtag):
 
 def create_table(conn):
     create_table_query = """
-    CREATE TABLE IF NOT EXISTS tiktok_videos_1 (
+    CREATE TABLE IF NOT EXISTS tiktok_videos_2 (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE,
         profile_link TEXT,
@@ -230,7 +230,7 @@ def create_table(conn):
 
 
 def main():
-    db_file = "tiktok_videos.db"
+    db_file = "../tiktok_videos.db"
     try:
         conn = sqlite3.connect(db_file)
         print(f"Connected to database: {db_file}")
@@ -241,7 +241,7 @@ def main():
     create_table(conn)
 
     # Define a list of hashtags to scrape
-    hashtags = ["muslim"]
+    hashtags = ["hijabisummeroutfit"]
 
     # Scrape TikTok videos for each hashtag
     for hashtag in hashtags:
